@@ -1,0 +1,22 @@
+# -*- coding: utf-8 -*-
+import scrapy
+
+
+class IndiamartSpider(scrapy.Spider):
+    name = 'indiamart'
+    allowed_domains = ['https://dir.indiamart.com/impcat/aluminum-led-bulb.html']
+    start_urls = ['http://https://dir.indiamart.com/impcat/aluminum-led-bulb.html/']
+
+    def parse(self, response):
+	company = response.css('.lcname::text').extract()
+	urls = response.css('.lcname::attr(href)').extract()
+	
+	for item in zip(company,urls):
+		scraped_info = {
+                	'company' : item[0],
+                	'url' : item[1],
+		}
+
+	yield scraped_info
+        
+	pass
